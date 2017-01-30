@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/entry_in_list"
+              android:orientation="horizontal"
+              android:paddingTop="16dp"
+              android:paddingBottom="16dp"
+              style="@style/AppTheme.ListViewStyle">
+
+    <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/list_entry_avatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+    <LinearLayout
+            android:orientation="vertical"
+            style="@style/AppTheme.ListViewStyle">
+        <TextView
+                android:id="@+id/list_entry_repo_name"
+                android:textStyle="bold"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                style="@style/AppTheme.ListViewStyle.Text"/>
+        <TextView
+                android:id="@+id/list_entry_repo_description"
+                android:layout_height="match_parent"
+                style="@style/AppTheme.ListViewStyle.Text"/>
+        <TextView
+                android:id="@+id/list_entry_url"
+                android:visibility="invisible"
+                style="@style/AppTheme.ListViewStyle"/>
+    </LinearLayout>
+</LinearLayout>
