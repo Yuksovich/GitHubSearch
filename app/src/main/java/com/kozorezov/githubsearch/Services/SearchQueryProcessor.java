@@ -17,6 +17,8 @@ import com.kozorezov.githubsearch.Utils.DataParser;
 import com.kozorezov.githubsearch.Utils.StateSaver;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Locale;
 
 final public class SearchQueryProcessor implements SearchView.OnQueryTextListener {
@@ -26,6 +28,8 @@ final public class SearchQueryProcessor implements SearchView.OnQueryTextListene
     private static final String URL_TEMPLATE = "https://api.github.com/search/repositories?q=%s&page=%d&per_page=%d";
     private static final long SEARCH_DELAY = 500; //delay in millis between input and starting search
     private static final Handler handler = new Handler();
+    private static final String CHARSET = "UTF-8";
+
 
     private final Activity context;
     private RequestQueue requestQueue;
@@ -99,7 +103,13 @@ final public class SearchQueryProcessor implements SearchView.OnQueryTextListene
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
-        final String request = String.format(Locale.ENGLISH, URL_TEMPLATE, query, page, context.getResources().getInteger(R.id.items_per_load));
+        String request;
+        try {
+            request = String.format(Locale.ENGLISH, URL_TEMPLATE, URLEncoder.encode(query, CHARSET), page, context.getResources().getInteger(R.id.items_per_load));
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+            request = "";
+        }
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, request, null,
                 new Response.Listener<JSONObject>() {
                     @Override
